@@ -10,7 +10,9 @@ public class SimpleTableBuilder extends LittleBaseListener {
     //JAVA STORES THE REFERENCE HENCE IT DOESNT WORK SO PLS ADD
 
     int register = 0; 
-    ArrayList<Object> operations = new ArrayList<>(); 
+    ArrayList<String> tinyCode = new ArrayList<>(); 
+    ArrayList<String> optimized = new ArrayList<>(); 
+
 
     ArrayList<String> variableNames = new ArrayList<>();
     ArrayList<String> types = new ArrayList<>();
@@ -45,8 +47,8 @@ public class SimpleTableBuilder extends LittleBaseListener {
 
     }
 
-    @Override public void exitProgram(LittleParser.ProgramContext ctx) { 
-        System.out.println("sys halt");
+    @Override public void exitProgram(LittleParser.ProgramContext ctx) {
+        //System.out.println("sys halt");
     }
 
     @Override public void enterString_decl(LittleParser.String_declContext ctx) {
@@ -59,7 +61,9 @@ public class SimpleTableBuilder extends LittleBaseListener {
         tableStack.peek().insert(name, type_value);
 
         String command = "str " + name + " " + value;
-        System.out.println(command); 
+        //adds string decl to tinycode list
+        tinyCode.add(command);
+        //System.out.println(command);
 
         //tables.remove(tableStack.peek());
 
@@ -82,7 +86,11 @@ public class SimpleTableBuilder extends LittleBaseListener {
             varContents[0] = type;
 
             String command = "var " + key;
-            System.out.println(command);
+
+            //adds var decl to tinyCode list
+            tinyCode.add(command);
+
+            //System.out.println(command);
             variableNames.add(key);
             types.add(type);
 
@@ -236,14 +244,24 @@ public class SimpleTableBuilder extends LittleBaseListener {
             
             if(type.equalsIgnoreCase("INT"))
             {
-                System.out.println("move " + a + " r" + register);
-                System.out.println("muli " + c + " r" + register);
-                System.out.println("move r" + register + " " + before);
+                //System.out.println("move " + a + " r" + register);
+                tinyCode.add("move " + a + " r" + register);
+
+                //System.out.println("muli " + c + " r" + register);
+                tinyCode.add("muli " + c + " r" + register);
+
+                //System.out.println("move r" + register + " " + before);
+                tinyCode.add("move r" + register + " " + before);
             }
             if(type.equalsIgnoreCase("FLOAT")) {
-                    System.out.println("move " + a + " r" + register);
-                    System.out.println("mulr " + c + " r" + register);
-                    System.out.println("move r" + register + " " + before);
+                    //System.out.println("move " + a + " r" + register);
+                    tinyCode.add("move " + a + " r" + register);
+
+                    //System.out.println("mulr " + c + " r" + register);
+                    tinyCode.add("mulr " + c + " r" + register);
+
+                    //System.out.println("move r" + register + " " + before);
+                    tinyCode.add("move r" + register + " " + before);
             }
 
         }
@@ -257,14 +275,24 @@ public class SimpleTableBuilder extends LittleBaseListener {
             
             if(type.equalsIgnoreCase("INT"))
             {
-                System.out.println("move " + a + " r" + register);
-                System.out.println("addi " + c + " r" + register);
-                System.out.println("move r" + register + " " + before);
+                //System.out.println("move " + a + " r" + register);
+                tinyCode.add("move " + a + " r" + register);
+
+                //System.out.println("addi " + c + " r" + register);
+                tinyCode.add("addi " + c + " r" + register);
+
+                //System.out.println("move r" + register + " " + before);
+                tinyCode.add("move r" + register + " " + before);
             }
             if(type.equalsIgnoreCase("FLOAT")) {
-                System.out.println("move " + a + " r" + register);
-                System.out.println("addr " + c + " r" + register);
-                System.out.println("move r" + register + " " + before);
+                    //System.out.println("move " + a + " r" + register);
+                    tinyCode.add("move " + a + " r" + register);
+
+                    //System.out.println("addr " + c + " r" + register);
+                    tinyCode.add("addr " + c + " r" + register);
+
+                    //System.out.println("move r" + register + " " + before);
+                    tinyCode.add("move r" + register + " " + before);
             }
         }
         else if (after.contains("/"))
@@ -277,17 +305,33 @@ public class SimpleTableBuilder extends LittleBaseListener {
             
             if(type.equalsIgnoreCase("INT"))
             {
-                System.out.println("move " + c + " r" + register);
-                System.out.println("move " + a + " r" + (register + 1));
-                System.out.println("divi r" + register + " r" + (register + 1));
-                System.out.println("move r" + (register + 1) + " " + before);
+                //System.out.println("move " + c + " r" + register);
+                tinyCode.add("move " + c + " r" + register);
+
+                //System.out.println("move " + a + " r" + (register + 1));
+                tinyCode.add("move " + a + " r" + (register + 1));
+
+                //System.out.println("divi r" + register + " r" + (register + 1));
+                tinyCode.add("divi r" + register + " r" + (register + 1));
+
+                //System.out.println("move r" + (register + 1) + " " + before);
+                tinyCode.add("move r" + (register + 1) + " " + before);
+
                 register++;
             }
             if(type.equalsIgnoreCase("FLOAT")) {
-                System.out.println("move " + c + " r" + register);
-                System.out.println("move " + a + " r" + (register + 1));
-                System.out.println("divr r" + register + " r" + (register + 1));
-                System.out.println("move r" + (register + 1) + " " + before);
+                //System.out.println("move " + c + " r" + register);
+                tinyCode.add("move " + c + " r" + register);
+
+                //System.out.println("move " + a + " r" + (register + 1));
+                tinyCode.add("move " + a + " r" + (register + 1));
+
+                //System.out.println("divr r" + register + " r" + (register + 1));
+                tinyCode.add("divr r" + register + " r" + (register + 1));
+
+                //System.out.println("move r" + (register + 1) + " " + before);
+                tinyCode.add("move r" + (register + 1) + " " + before);
+
                 register++;
             }
         }
@@ -302,19 +346,32 @@ public class SimpleTableBuilder extends LittleBaseListener {
             
             if(type.equalsIgnoreCase("INT"))
             {
-                System.out.println("move " + a + " r" + register);
-                System.out.println("subi " + c + " r" + register);
-                System.out.println("move r" + register + " " + before);
+                //System.out.println("move " + a + " r" + register);
+                tinyCode.add("move " + a + " r" + register);
+
+                //System.out.println("subi " + c + " r" + register);
+                tinyCode.add("subi " + c + " r" + register);
+
+                //System.out.println("move r" + register + " " + before);
+                tinyCode.add("move r" + register + " " + before);
             }
             if(type.equalsIgnoreCase("FLOAT")) {
-                    System.out.println("move " + a + " r" + register);
-                    System.out.println("subr " + c + " r" + register);
-                    System.out.println("move r" + register + " " + before);
+                    //System.out.println("move " + a + " r" + register);
+                    tinyCode.add("move " + a + " r" + register);
+
+                    //System.out.println("subr " + c + " r" + register);
+                    tinyCode.add("subr " + c + " r" + register);
+
+                    //System.out.println("move r" + register + " " + before);
+                    tinyCode.add("move r" + register + " " + before);
             }
         }
         else {
-            System.out.println("move " + after + " r" + register); 
-            System.out.println("move " + "r" + register + " " + before);
+            //System.out.println("move " + after + " r" + register);
+            tinyCode.add("move " + after + " r" + register); 
+
+            //System.out.println("move " + "r" + register + " " + before);
+            tinyCode.add("move " + "r" + register + " " + before);
         }
         
         register++; 
@@ -336,49 +393,27 @@ public class SimpleTableBuilder extends LittleBaseListener {
         if (result.endsWith(");")) {
             result = result.substring(0, result.length() - 2);
         }
- 
-        String[] myArray;
 
-
-        if(result.contains(" "))
+        String[] myArray = result.split(","); 
+        
+        for (int i = 0; i<myArray.length; i++)
         {
-             myArray = result.split(", "); 
-        
-            for (int i = 0; i<myArray.length; i++)
+            if(variableNames.contains(myArray[i]) && types.get(i).equalsIgnoreCase("INT"))
             {
-                if(variableNames.contains(myArray[i]) && types.get(i).equalsIgnoreCase("INT"))
-                {
-                    System.out.println("sys writei " + myArray[i]);
-                }
-    
-                else if(variableNames.contains(myArray[i]) && types.get(i).equalsIgnoreCase("FLOAT"))
-                {
-                    System.out.println("sys writer " + myArray[i]);
-                }
-    
-                else {
-                    System.out.println("sys writes " + myArray[i]); 
-                }
+                //System.out.println("sys writei " + myArray[i]);
+                tinyCode.add("sys writei " + myArray[i]);
+
             }
-        }
-        else {
-            myArray = result.split(","); 
-        
-            for (int i = 0; i<myArray.length; i++)
+
+            else if(variableNames.contains(myArray[i]) && types.get(i).equalsIgnoreCase("FLOAT"))
             {
-                if(variableNames.contains(myArray[i]) && types.get(i).equalsIgnoreCase("INT"))
-                {
-                    System.out.println("sys writei " + myArray[i]);
-                }
-    
-                else if(variableNames.contains(myArray[i]) && types.get(i).equalsIgnoreCase("FLOAT"))
-                {
-                    System.out.println("sys writer " + myArray[i]);
-                }
-    
-                else {
-                    System.out.println("sys writes " + myArray[i]); 
-                }
+                //System.out.println("sys writer " + myArray[i]);
+                tinyCode.add("sys writer " + myArray[i]);
+            }
+
+            else {
+                //System.out.println("sys writes " + myArray[i]); 
+                tinyCode.add("sys writes " + myArray[i]); 
             }
         }
     }
@@ -402,16 +437,19 @@ public class SimpleTableBuilder extends LittleBaseListener {
         {
             if(variableNames.contains(myArray[i]) && types.get(i).equalsIgnoreCase("INT"))
             {
-                System.out.println("sys readi " + myArray[i]);
+                //System.out.println("sys readi " + myArray[i]);
+                tinyCode.add("sys readi " + myArray[i]);
             }
 
             else if(variableNames.contains(myArray[i]) && types.get(i).equalsIgnoreCase("FLOAT"))
             {
-                System.out.println("sys readr " + myArray[i]);
+                //System.out.println("sys readr " + myArray[i]);
+                tinyCode.add("sys readr " + myArray[i]);
             }
 
             else {
-                System.out.println("sys reads " + myArray[i]); 
+                //System.out.println("sys reads " + myArray[i]); 
+                tinyCode.add("sys reads " + myArray[i]); 
             }
         }
      }
@@ -437,5 +475,159 @@ public class SimpleTableBuilder extends LittleBaseListener {
             System.out.println();
         }
 
+    }
+
+    public ArrayList<String> returnTinyCode() {
+
+        return tinyCode;
+    }
+
+    public void optimizeTinyCode() {
+        ArrayList<String> toOptimize = tinyCode;
+
+        for (int i = 0; i < toOptimize.size(); i++) {
+            String line = toOptimize.get(i);
+            String[] lineSplit = line.split(" ");
+
+            if (lineSplit[0].equals("move")) {
+                String nextLine = toOptimize.get(i+1);
+                String[] nextReg = nextLine.split(" ");
+                if (!lineSplit[1].matches("r[0-9]+[0-9]*") && lineSplit[2].equals(nextReg[1])) {
+                    //if r- is equal to the next instructions r-
+                    optimized.add("move " + lineSplit[1] + " " + nextReg[2]);
+                    //move to the next instruction after the register split
+                    i += 1;
+                } else {
+                    optimized.add(line);
+                }
+            } else {
+                optimized.add(line);
+            }
+        }
+        contProp(optimized);
+        removeUnused(optimized);
+    }
+
+    public void contProp(ArrayList<String> list)
+    {
+        HashMap<String, String> constants = new HashMap<>();
+        for(int i = 0; i < list.size(); i++)
+        {
+            String line = list.get(i);
+            String[] lineSplit = line.split(" ");
+
+            if(lineSplit[0].equals("move") || lineSplit[0].startsWith("add") || lineSplit[0].startsWith("mul") || lineSplit[0].startsWith("sub") || lineSplit[0].startsWith("div"))
+            {
+                if(constants.containsKey(lineSplit[1]))
+                {
+                    list.set(i, lineSplit[0] + " " + constants.get(lineSplit[1]) + " " + lineSplit[2]);
+                }
+            }
+
+            if((lineSplit[0].equals("move") || lineSplit[0].startsWith("add") || lineSplit[0].startsWith("mul") || lineSplit[0].startsWith("sub") || lineSplit[0].startsWith("div")) && constants.containsKey(lineSplit[2]))
+            {
+                constants.remove(lineSplit[2]);
+            }
+
+            if(Character.isDigit(lineSplit[1].charAt(0)) && lineSplit[0].equals("move"))
+            {
+                constants.put(lineSplit[2], lineSplit[1]);
+            }
+            
+        }
+
+    }
+
+    public void removeUnused(ArrayList<String> list)
+    {
+        HashMap<String, Integer> uses = new HashMap<>();
+
+        for(int i = 0; i < list.size(); i++)
+        {
+            String line = list.get(i);
+            String[] lineSplit = line.split(" ");
+
+            if(lineSplit[0].equals("move") || lineSplit[0].startsWith("add") || lineSplit[0].startsWith("mul") || lineSplit[0].startsWith("sub") || lineSplit[0].startsWith("div"))
+            {
+                if(!uses.containsKey(lineSplit[2]))
+                {
+                    uses.put(lineSplit[2], 0);
+                }
+                
+            }
+
+            if(lineSplit[0].equals("move") || lineSplit[0].startsWith("add") || lineSplit[0].startsWith("mul") || lineSplit[0].startsWith("sub") || lineSplit[0].startsWith("div"))
+            {
+                if(uses.containsKey(lineSplit[1]))
+                {
+                    uses.put(lineSplit[1], uses.get(lineSplit[1]) + 1);
+                }
+                
+            }
+
+            if(lineSplit[0].startsWith("add") || lineSplit[0].startsWith("mul") || lineSplit[0].startsWith("sub") || lineSplit[0].startsWith("div"))
+            {
+                if(uses.containsKey(lineSplit[2]))
+                {
+                    uses.put(lineSplit[2], uses.get(lineSplit[2]) + 1);
+                }
+                
+            }
+
+            if(lineSplit[0].startsWith("sys"))
+            {
+                if(uses.containsKey(lineSplit[2]))
+                {
+                    uses.put(lineSplit[2], uses.get(lineSplit[2]) + 1);
+                }
+                
+            }
+        }
+
+        Set<String> keys = uses.keySet();
+        ArrayList<String> listOfKeys = new ArrayList<String>(keys);
+        ArrayList<Integer> listOfValues = new ArrayList<>();
+
+        for(String key: listOfKeys)
+        {
+            listOfValues.add(uses.get(key));
+        }
+
+        for(int i = 0; i < list.size(); i++)
+        {
+            String line = list.get(i);
+            String[] lineSplit = line.split(" ");
+
+            if(lineSplit[0].equals("var"))
+            {
+                if(uses.containsKey(lineSplit[1]) && uses.get(lineSplit[1]) == 0)
+                {
+                    list.set(i, null);
+                }
+            }
+
+            if(lineSplit[0].equals("move") && uses.containsKey(lineSplit[2]))
+            {
+                if(uses.containsKey(lineSplit[2]) && uses.get(lineSplit[2]) == 0)
+                {
+                    list.set(i, null);
+                }
+            }
+        }
+
+        list.removeIf(i -> Objects.equals(i, null));
+    }
+
+    public void printOptimized() {
+
+        for (int i = 0; i < optimized.size(); i++) {
+            System.out.println(optimized.get(i));
+        }
+    }
+
+    public void printTinyCode() {
+        for (int i = 0; i < tinyCode.size(); i++) {
+            System.out.println(tinyCode.get(i));
+        }
     }
 }
