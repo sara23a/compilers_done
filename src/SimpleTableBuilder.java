@@ -262,9 +262,9 @@ public class SimpleTableBuilder extends LittleBaseListener {
                 System.out.println("move r" + register + " " + before);
             }
             if(type.equalsIgnoreCase("FLOAT")) {
-                    System.out.println("move " + a + " r" + register);
-                    System.out.println("addr " + c + " r" + register);
-                    System.out.println("move r" + register + " " + before);
+                System.out.println("move " + a + " r" + register);
+                System.out.println("addr " + c + " r" + register);
+                System.out.println("move r" + register + " " + before);
             }
         }
         else if (after.contains("/"))

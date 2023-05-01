@@ -1,0 +1,15 @@
+PROGRAM age
+BEGIN
+    INT yearBorn, year, temp;
+    STRING newline := "\n";
+
+    FUNCTION VOID main()
+    BEGIN
+        READ(yearBorn);
+        
+        year := 2023;
+        temp := year - yearBorn;
+
+        WRITE(temp, newline);
+    END
+END

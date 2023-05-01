@@ -1,0 +1,16 @@
+PROGRAM f2k
+BEGIN
+        FLOAT a, b, c, d, t1, t2, t3;
+        STRING newline := "n";
+        FUNCTION VOID main()
+        BEGIN
+                READ(a);
+                b := 32;
+                t1 := a - b;
+                c  := 1.8;
+                t2 := t1 / c;
+                d := 273.15;
+                t3 := t2 + d;
+                WRITE(t3, newline);
+        END
+END

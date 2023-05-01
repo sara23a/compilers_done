@@ -1,0 +1,35 @@
+PROGRAM volumeOfCylinder
+BEGIN
+  FLOAT pi := 3.145;
+  INT r, h;
+  FLOAT area;
+  FLOAT volume;
+  
+  STRING intro := "Cylinder Volume Calculator\n";
+  STRING prompt1 := "Please input the cylinder's height: ";
+  STRING prompt2 := "Please input the cylinder's radius: ";
+  STRING output := "The volume of your cylinder is ";
+  STRING newline := "\n";
+  
+  FUNCTION VOID main()
+  BEGIN
+    WRITE(intro);
+    
+    -- Get height
+    WRITE(prompt1);
+    READ(h);
+    
+    -- Get radius
+    WRITE(prompt2);
+    READ(r);
+    
+    -- Do calculation pi*r^2*h
+    area = pi * r;
+    area = area * r;
+    volume = volume * h;
+    WRITE(output);
+    WRITE(volume);
+    WRITE(newline);
+  END
+
+END

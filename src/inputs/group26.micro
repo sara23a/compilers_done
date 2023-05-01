@@ -1,0 +1,13 @@
+PROGRAM lbs2kg
+BEGIN
+	FLOAT lbs,kg,temp;
+	STRING newline :="\n";
+
+	FUNCTION VOID main()
+	BEGIN
+	const:=0.45359237;
+	READ(lbs);
+	kg:=const*lbs;
+	WRITE(kg,newline);
+	END
+END

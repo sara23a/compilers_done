@@ -1,0 +1,14 @@
+PROGRAM seconds2hour
+BEGIN
+	FLOAT seconds, hours, t1, t2;
+	STRING newline := "\n";
+
+	FUNCTION VOID main()
+	BEGIN
+		READ(seconds);
+		t1 := seconds / 60.0;
+		t2 := t1 / 60.0;
+		hours := t2;
+		WRITE(hours, newline);
+	END
+END

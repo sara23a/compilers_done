@@ -1,0 +1,26 @@
+PROGRAM p
+BEGIN
+
+    INT a, b, c, d, answer;
+    
+    FUNCTION VOID main()
+    BEGIN
+           READ(e)
+           a := 25
+           b := 50
+           c := 75
+           
+           d := a + b;
+           c := c/d;
+           c := a - c;  
+           c := a - c;  
+           c := a - c;  
+           c := c * c;
+           answer := c/11;
+           
+           WRITE(answer)
+    END
+END
+           
+           
+           

@@ -1,0 +1,15 @@
+PROGRAM velocity_calculator
+BEGIN
+FLOAT initial_velocity, acceleration, time, final_velocity;
+STRING newline := "\n";
+
+FUNCTION VOID main()
+BEGIN
+    READ(initial_velocity);
+    READ(acceleration);
+    READ(time);
+    
+    final_velocity := initial_velocity + acceleration * time;
+    
+    WRITE(final_velocity, newline);
+END

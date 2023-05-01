@@ -8,7 +8,7 @@ BEGIN
     STRING withString := "With ";
     STRING horsePowerString := " horsepower, you have ";
     STRING horsesString := " horses";
-
+    
     FUNCTION VOID main()
         BEGIN
             WRITE(greeting, nl);
